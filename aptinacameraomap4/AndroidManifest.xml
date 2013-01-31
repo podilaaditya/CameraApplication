@@ -1,0 +1,80 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aptina"
+    android:versionCode="1"
+    android:versionName="@string/app_version">
+
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.touchscreen.multitouch"
+        android:required="true"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+ 	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!--application android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/AppTheme">
+
+    </application-->
+    <application android:icon="@drawable/camera_launcher" 
+        android:label="@string/app_name_camera"
+        android:hardwareAccelerated="true">
+
+        <activity
+            android:clearTaskOnLaunch="true"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:name="com.aptina.camera.CameraActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:clearTaskOnLaunch="true"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:icon="@drawable/video_launcher"
+            android:label="@string/app_name_video"
+            android:launchMode="singleTask"
+            android:name="com.aptina.camera.VideoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:icon="@drawable/gallery_launcher"
+            android:label="@string/app_name_gallery"
+  			android:theme="@style/GalleryTheme"
+  			android:screenOrientation="landscape"
+            android:name="com.aptina.camera.GridGalleryActivity">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity android:name="com.aptina.camera.ImageDetailActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name="com.aptina.camera.AboutActivity"
+            android:theme="@android:style/Theme.Dialog"
+            android:screenOrientation="landscape"/>
+    </application>
+
+</manifest>

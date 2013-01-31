@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="CustomModeView">
+
+		<attr name="selectedColor" format="integer"/>
+		<attr name="deselectedColor" format="integer"/>
+		<attr name="fontSizeBig" format="float"/>
+		<attr name="fontSizeSmall" format="float"/>
+		<attr name="selected" format="boolean"/>
+		<attr name="selectedImage" format="integer"/>
+		<attr name="deselectedImage" format="integer"/>
+
+	
+	</declare-styleable>
+
+</resources>

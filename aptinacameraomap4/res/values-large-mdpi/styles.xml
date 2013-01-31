@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PanelButton">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#008</item>
+        <item name="android:layout_width">@dimen/panel_button_size</item>
+        <item name="android:minWidth">@dimen/panel_button_size</item>
+        <item name="android:layout_height">@dimen/panel_button_size</item>
+        <item name="android:minHeight">@dimen/panel_button_size</item>
+        <item name="android:layout_marginBottom">15dip</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+</resources>

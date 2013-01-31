@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/focus_menu_one"
+		android:layout_centerHorizontal="true"
+		android:layout_centerVertical="true"
+		android:visibility="gone"
+		android:layout_width="@dimen/focus_menu_width"
+		android:layout_height="@dimen/focus_menu_height"
+		android:background="@drawable/border_focus_menu"
+		android:padding="@dimen/focus_menu_border_size"
+		android:orientation="vertical">
+		
+		<ScrollView		android:id="@+id/focus_menu_scroll"
+		    android:layout_width="match_parent"
+			android:layout_height="match_parent">	
+			
+			<LinearLayout  android:id="@+id/focus_menu_main_linear_layout"
+			    android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+				
+				<TextView	android:id="@+id/focus_menu_options_title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/options_title"
+					android:background="@color/focus_menu_options_title_backgroud_color"
+					android:textColor="@android:color/black"
+					android:textSize="@dimen/focus_menu_options_title_text_size"
+					android:textStyle="bold" />
+				<LinearLayout  android:id="@+id/focus_menu_linear_list_layout"
+				    android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:paddingBottom="@dimen/focus_menu_list_layout_pad_bottom"
+					android:paddingLeft="@dimen/focus_menu_list_layout_pad_left"
+					android:paddingRight="@dimen/focus_menu_list_layout_pad_right"
+					android:paddingTop="@dimen/focus_menu_list_layout_pad_top"
+					android:orientation="vertical">
+					<TextView	android:id="@+id/focus_menu_focus_title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/focus_menu_focus_title_text_size"
+						android:textColor="@color/focus_menu_focus_title_text_color"
+						android:text="@string/focus_title"
+						android:textStyle="bold" />
+					<View	android:id="@+id/focus_menu_line_seperator_view"
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/focus_menu_line_seperator_view_height"
+						android:background="@color/focus_menu_line_seperator_view_background_color" />
+				    <LinearLayout
+						android:id="@+id/ll_focuses"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="vertical" />
+				</LinearLayout>
+			</LinearLayout>
+			
+		</ScrollView>
+</LinearLayout>
+
+

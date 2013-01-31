@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="panel_max_width">100dip</dimen>
+	<dimen name="panel_min_width">15dip</dimen>
+	<dimen name="panel_button_size">83dip</dimen>
+	<dimen name="splitter_handle_touch_area">10dip</dimen>
+	<dimen name="selector_buttons_margin">40dip</dimen>
+	<dimen name="mode_selector_width">450dip</dimen>
+	<dimen name="mode_selector_height">150dip</dimen>
+	<dimen name="mode_selector_scroller_width">360dip</dimen>
+	<dimen name="mode_selector_scroller_height">72dip</dimen>
+	<dimen name="resolution_button_big_text_size">26px</dimen>
+	<dimen name="resolution_button_small_text_size">18px</dimen>
+	<dimen name="panel_button_caption_font_size">13dip</dimen>
+	<dimen name="panel_button_icon_width">64dip</dimen>
+	<dimen name="panel_button_icon_height">51dip</dimen>
+	<dimen name="panel_button_image_margin_top">10dip</dimen>
+	<dimen name="panel_button_label_margin_bottom">4.5dip</dimen>
+	<dimen name="panel_padding">8dip</dimen>
+	<dimen name="panel_divider_margin_bottom">17dip</dimen>
+	<dimen name="reset_button_margin_top">12dip</dimen>
+	<dimen name="resolution_holder_margin_top">15dip</dimen>
+	<dimen name="resolution_selector_holder_size">54dip</dimen>
+	<dimen name="mode_selection_image_size">48dip</dimen>
+	<dimen name="mode_selection_caption_font_size">8dip</dimen>
+	<dimen name="mode_selector_margin">22dip</dimen>
+	<dimen name="grid_image_thumbnail_size">148dp</dimen>
+    <dimen name="grid_image_thumbnail_spacing">2dp</dimen>
+</resources>

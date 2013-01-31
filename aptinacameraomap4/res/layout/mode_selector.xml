@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:clickable="true"
+	android:focusable="true"
+	android:paddingLeft="@dimen/mode_selector_margin"
+	android:paddingRight="@dimen/mode_selector_margin" >
+
+	<ImageView
+		xmlns:aptina="http://schemas.android.com/apk/res/com.aptina"
+		android:id="@+id/mode_image_holder"
+		android:layout_width="@dimen/mode_selection_image_size"
+		android:layout_height="@dimen/mode_selection_image_size"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+		android:clickable="false"
+		aptina:deselectedColor="@color/default_resolution_text_color"
+		android:focusable="false"
+		android:scaleType="centerInside"
+		aptina:selected="false"
+		aptina:selectedColor="@color/resolution_button_text_color" />
+
+	<TextView
+		android:id="@+id/mode_caption_holder"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="6dip"
+		android:clickable="false"
+		android:focusable="false"
+		android:text="@string/mode_auto"
+		android:textSize="@dimen/panel_button_caption_font_size" />
+
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:clickable="true" >
+
+	<com.aptina.camera.components.SizeHolder
+		xmlns:aptina="http://schemas.android.com/apk/res/com.aptina"
+		android:id="@+id/resolution_selector_holder"
+		android:layout_width="@dimen/resolution_selector_holder_size"
+		android:layout_height="@dimen/resolution_selector_holder_size"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginLeft="@dimen/selector_buttons_margin"
+		android:layout_marginRight="@dimen/selector_buttons_margin"
+		android:layout_marginTop="8dip"
+		aptina:deselectedColor="@color/default_resolution_text_color"
+		aptina:fontSizeBig="22.0"
+		aptina:fontSizeSmall="16.0"
+		aptina:selected="false"
+		aptina:selectedColor="@color/resolution_button_text_color" >
+	</com.aptina.camera.components.SizeHolder>
+
+</RelativeLayout>

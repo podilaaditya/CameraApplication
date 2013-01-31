@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_camera">Aptina Camera</string>
+    <string name="app_name_video">Aptina Video</string>
+    <string name="app_name_gallery">Aptina Gallery</string>
+    <string name="app_version">Aptina Camera </string>
+    <string name="log_send_email">bkaur@aptina.com</string>
+	<string name="resolution_label">Resolution</string>
+	<string name="video_resolution_label">Video</string>
+	<string name="snapshot_resolution_label">Snapshot</string>
+	<string name="options_label">Options</string>
+	<string name="switch_label">Switch</string>
+	<string name="reset_label">Reset</string>
+
+	<string name="mode_auto">Auto</string>
+	<string name="mode_burst">Burst</string>
+	<string name="mode_hdr">HDR</string>
+	<string name="mode_panorama">Panorama</string>
+	<string name="mode_zsl">ZSL</string>
+	<string name="mode_dvs">DVS</string>
+	<string name="recording_time">00:00:00</string>
+	
+ 	<string name="imageview_description">Image Thumbnail</string>
+	<string name="no_media">No media</string>
+	<string name="options_title">Options</string>
+	<string name="focus_title">Focus</string>
+	<string name="zero_zoom_label">Zoom out to 0 before taking picture</string>
+	<string name="sdcard_unavailable">Please mount USB storage before using camera.</string>
+	<string name="sdcard_small_size">Your available size on SD card less than 20MB</string>
+	<string name="sdcard_not_enough_space">No space left on SD card</string>
+	<string name="no_network_connection_toast">No network connection found</string>
+	<string name="clear_cache_menu">Clear Caches</string>
+    <string name="clear_cache_complete_toast">Caches have been cleared</string>
+	<!-- Options -->
+	<string name="enable_logging_message">Enabled Logging</string>
+	<string name="delay_times_are_enabled_message">Enabled Delay Times</string>
+	<string name="disable_logging_message">Disabled Logging</string>
+	<string name="delay_times_are_disabled_message">Disabled Delay Times</string>
+	<string name="logging_is_enabled_message">Logging has been enabled</string>
+	<string name="logging_is_disabled_message">Logging has been disabled</string>
+	<string name="about_label">About</string>
+	<string name="logging_toggle_label">Logging on/off</string>
+	<string name="send_log_label">Send log file</string>
+	<string name="delay_toggle_label">Delay Toggle</string>
+	<string name="smile_shutter_string">Waiting for a Smile</string>
+</resources>

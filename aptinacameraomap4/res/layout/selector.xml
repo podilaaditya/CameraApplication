@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<ImageView
+		android:id="@+id/selector_background"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:scaleType="fitXY"
+		android:src="@drawable/mode_selector_background" />
+
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/selector"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" >
+
+		<HorizontalScrollView
+			android:id="@+id/selector_buttons_scroller"
+			android:layout_width="@dimen/mode_selector_scroller_width"
+			android:layout_height="@dimen/mode_selector_scroller_height"
+			android:layout_centerInParent="true"
+			android:background="@drawable/mode_black"
+			android:fadeScrollbars="false"
+			android:padding="0dip"
+			android:paddingRight="5dip"
+			android:scrollbarStyle="outsideOverlay"
+			android:scrollbars="horizontal" >
+
+			<LinearLayout
+				android:id="@+id/selector_buttons_container"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_gravity="center_vertical"
+				android:gravity="center_vertical|center_horizontal"
+				android:orientation="horizontal"
+				android:padding="0dip" >
+			</LinearLayout>
+		</HorizontalScrollView>
+	</RelativeLayout>
+
+</FrameLayout>
