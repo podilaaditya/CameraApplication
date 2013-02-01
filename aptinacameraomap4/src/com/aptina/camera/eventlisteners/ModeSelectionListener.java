@@ -156,7 +156,7 @@ public class ModeSelectionListener implements OnClickListener, OnModeSelectionLi
         mSelectedButton.setSelected(true);
 
         // Update panel button.
-        mModeHolder.setImageResource(mSelectedButton.getSelectedImageResource());
+        //mModeHolder.setImageResource(mSelectedButton.getSelectedImageResource());
         mModeText.setText(mSelectedButton.getCaption());
         mModeSelector.setVisibility(View.GONE);
         
@@ -244,8 +244,21 @@ public class ModeSelectionListener implements OnClickListener, OnModeSelectionLi
                 button.setCaption(R.string.mode_dvs);
                 button.setSelectedImage(R.drawable.icon_active_dvs);
                 button.setDeselectedImage(R.drawable.icon_inactive_dvs);
+            } 
+            /**
+             * Changes for the Smile and Face shutter
+             * 
+             */
+            else if (mode.equals(CameraInfo.FACE_SHUTTER)) {
+                button.setCaption(R.string.mode_face_shutter);
+                //button.setSelectedImage(R.drawable.icon_active_dvs);
+                //button.setDeselectedImage(R.drawable.icon_inactive_dvs);
             }
-            
+            else if (mode.equals(CameraInfo.SMILE_SHUTTER)) {
+                button.setCaption(R.string.mode_smile_shutter);
+                //button.setSelectedImage(R.drawable.icon_active_dvs);
+                //button.setDeselectedImage(R.drawable.icon_inactive_dvs);
+            }
             buttons.add(button);
             
             if (mode == mActiveMode) {

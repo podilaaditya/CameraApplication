@@ -20,6 +20,10 @@
 	<string name="mode_dvs">DVS</string>
 	<string name="recording_time">00:00:00</string>
 	
+	<!-- Face and Smile shutter changes  -->
+	<string name="mode_face_shutter">FACE SHUTTER</string>
+	<string name="mode_smile_shutter">SMILE SHUTTER</string>
+	
  	<string name="imageview_description">Image Thumbnail</string>
 	<string name="no_media">No media</string>
 	<string name="options_title">Options</string>

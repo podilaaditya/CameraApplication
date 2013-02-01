@@ -56,6 +56,17 @@ public class CameraInfo {
      */
     public static final String CAMERA_MODE_ZSL = "zsl";
 
+    
+    /**
+     * Face Shutter 
+     */
+    public static final String CAMERA_MODE_FACE_SHUTTER = "face-shutter";
+    
+    /**
+     * Smile Shutter
+     */
+    public static final String CAMERA_MODE_SMILE_SHUTTER = "smile-shutter";
+    
     /**
      * DVS video mode.
      */
@@ -203,6 +214,25 @@ public class CameraInfo {
             Logger.logMessage("CameraInfo.isZslSupprted() : ZSL feature is not supported");
         }
 
+        Log.d(TAG,"------------------------- Face /Smile Shutter GUI Views start----------------------");
+        try {
+            String lStrFaceShutter = parameters.get(FACE_SHUTTER);
+            if (lStrFaceShutter != null) {
+                modes.add(FACE_SHUTTER);
+            }
+        } catch (Exception ex) {
+            Logger.logMessage("CameraInfo FaceShutter : FaceShutter feature is not supported");
+        }
+        
+        try {
+            String lStrSmileShutter = parameters.get(SMILE_SHUTTER);
+            if (lStrSmileShutter != null) {
+                modes.add(SMILE_SHUTTER);
+            }
+        } catch (Exception ex) {
+            Logger.logMessage("CameraInfo SmileShutter : SmileShutter feature is not supported");
+        }
+        Log.d(TAG,"------------------------- Face /Smile Shutter GUI Views end----------------------");
         return modes;
     }
 

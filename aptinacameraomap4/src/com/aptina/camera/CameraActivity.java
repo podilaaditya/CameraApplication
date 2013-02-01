@@ -28,6 +28,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
+import android.hardware.Camera.Face;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
 import android.media.AudioManager;
@@ -377,6 +378,12 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
      * Variable for front/back camera switch button
      */
     private ImageView mCameraChanger = null;
+    
+    /**
+     * Smile and Face shutter Flag
+     */
+    private boolean mShutterCaptureSet  = false;
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -721,7 +728,9 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
 				mCamera.setParameters(mCurrentCameraParameters[mCurrentCameraIndex]);
 				Log.i(TAG, "Focus mode selected : " + focus_options[index].toString());
 				Toast.makeText(mContext,  focus_options[index].toString(), Toast.LENGTH_SHORT).show();
+				
 				removeFocusOptions();
+				
 				
 			}
 		};
@@ -870,7 +879,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
 //				@Override
 //				public void onClick(View v) {
 //					Intent gridGalleryintent = new Intent(getApplicationContext(), GridGalleryActivity.class);
-//                    startActivity(gridGalleryintent);
+//                    startActivity(gridGallerylintent);
 //					
 //				}
 //            	
@@ -1332,7 +1341,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
 		
         // KPI Logging.
         updateTime();
-        Logger.logMessage("Camera preview started at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
+        //Logger.logMessage("Camera preview started at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
     }
 
     /**
@@ -1625,7 +1634,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
     	
         // KPI logging
         updateTime();
-        Logger.logMessage("Camera.takePicture() called on " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
+        //Logger.logMessage("Camera.takePicture() called on " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
 
         mThumbnailsDataList.clear();
         mLastPhotoBuffer = null;
@@ -1658,7 +1667,8 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
             mRestoreFocusMode = true;
         }
         
-        if(CameraInfo.CAMERA_MODE_AUTO.equals(mActiveMode)){
+        if(CameraInfo.CAMERA_MODE_AUTO.equals(mActiveMode) 
+        		|| CameraInfo.FACE_SHUTTER.equals(mActiveMode) || CameraInfo.SMILE_SHUTTER.equals(mActiveMode)  ){
         	camera.takePicture(mShutterCallback, mRAWPictureCallback, mPostViewCallback, mJPEGPhotoCallback);
         }else{
         	camera.takePicture(mShutterCallback, null, mPostViewCallback, mJPEGPhotoCallback);
@@ -1755,7 +1765,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
             
             // KPI logging.
             updateTime();
-            Logger.logMessage("Camera.PictureCallback.onPictureTaken() JPEG called at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
+            //Logger.logMessage("Camera.PictureCallback.onPictureTaken() JPEG called at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
             jpegDataNull = (data == null);
             try {
                 if ((mBurstImages == 0) && (CameraInfo.CAMERA_MODE_HDR.equals(mActiveMode))) {
@@ -1772,12 +1782,30 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
                     mCurrentCameraParameters[mCurrentCameraIndex].setFocusMode(mFocusMode);
                     mCamera.setParameters(mCurrentCameraParameters[mCurrentCameraIndex]);
                     mRestoreFocusMode = false;
+                 }
+                
+                if(CameraInfo.FACE_SHUTTER.equals(mActiveMode) || CameraInfo.SMILE_SHUTTER.equals(mActiveMode)){
+                    Parameters parameters = mCamera.getParameters();
+                    Log.d(TAG, " ------------------- Recieved Image Capture Automaticaly from shutterListner");
+					parameters.set(CameraInfo.FACE_SHUTTER,CameraInfo.FACE_SHUTTER_OFF);
+					parameters.set(CameraInfo.SMILE_SHUTTER,CameraInfo.SMILE_SHUTTER_OFF);
+                    //mActiveMode = CameraInfo.CAMERA_MODE_AUTO;
+					mShutterCaptureSet = false;
+                    mCamera.setParameters(parameters);
+                    quickModeSwitch(parameters);
+                    //End
+                	//mCamera.startPreview();
+                    mPreviewing = true;
+                	
                 }
-
                 if (!mPreviewing && !CameraInfo.CAMERA_MODE_BURST.equals(mActiveMode) && !CameraInfo.CAMERA_MODE_PANORAMA.equals(mActiveMode)) { 
 
                     //Changes for Roi based AE: Release AE locks
                     Parameters parameters = mCamera.getParameters();
+                    //Log.d(TAG, " ------------------- Recieved Image Capture Automaticaly from shutterListner");
+					//parameters.set(CameraInfo.FACE_SHUTTER,CameraInfo.FACE_SHUTTER_OFF);
+					//parameters.set(CameraInfo.SMILE_SHUTTER,CameraInfo.SMILE_SHUTTER_OFF);
+                    //mActiveMode = CameraInfo.CAMERA_MODE_AUTO;
                     parameters.setAutoExposureLock(false);
                     mCamera.setParameters(parameters);
                     //End
@@ -1812,7 +1840,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
 	       	
             // KPI logging.
             updateTime();
-            Logger.logMessage("Camera.PictureCallback.onPictureTaken() RAW called at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
+            ////Logger.logMessage("Camera.PictureCallback.onPictureTaken() RAW called at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
             
             rawDataNull = (data == null);
             Log.i(TAG, "RAW capture data length : " + (data == null ? "null" : data.length));
@@ -2114,7 +2142,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
 
                     // KPI Logging.
                     updateTime();
-                    Logger.logMessage("Saved photo in " + savedFileName + " at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
+                    //Logger.logMessage("Saved photo in " + savedFileName + " at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
                 }
                 catch (java.io.IOException e) {
                     Logger.logApplicationException(e, "CameraActivity.SavePhotoAction() failed. Couldn't save the file");
@@ -2163,7 +2191,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
 
                 // KPI logging.
                 updateTime();
-                Logger.logMessage("Thumbnail loaded at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
+                //Logger.logMessage("Thumbnail loaded at " + DateTimeUtils.formatDate(mCurrentDate) + ", time diff: " + getTimeDiff());
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -2472,6 +2500,27 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
                     params.set(CameraInfo.CAMERA_MODE_ZSL, "disable"); // zsl                		
                 	
                 }
+                if(mode.equals(CameraInfo.FACE_SHUTTER)){
+                	Log.d(TAG,"mActiveMode= "+ mActiveMode + "Mode Selected FACE Shutter");
+                    params.set(CameraInfo.CAMERA_MODE_PANORAMA, "disable"); // panorma
+                    params.set(CameraInfo.CAMERA_MODE_BURST, 0); // burst                    
+                    params.set(CameraInfo.CAMERA_MODE_ZSL, "disable"); // zsl                		
+                    params.set(CameraInfo.SMILE_SHUTTER, CameraInfo.SMILE_SHUTTER_OFF); //Smile Shutter
+                    
+                    //set Face Shutter On
+                    //params.set(CameraInfo.FACE_SHUTTER, CameraInfo.FACE_SHUTTER_ON); //Smile Shutter
+                }
+                if(mode.equals(CameraInfo.SMILE_SHUTTER)){
+                	
+                	Log.d(TAG,"mActiveMode= "+ mActiveMode + "Mode Selected Smile Shutter");
+                	params.set(CameraInfo.CAMERA_MODE_PANORAMA, "disable"); // panorma
+                    params.set(CameraInfo.CAMERA_MODE_BURST, 0); // burst                    
+                    params.set(CameraInfo.CAMERA_MODE_ZSL, "disable"); // zsl                		
+                    params.set(CameraInfo.FACE_SHUTTER, CameraInfo.FACE_SHUTTER_OFF); //Smile Shutter
+                    
+                    //set Face Shutter On
+                    //params.set(CameraInfo.FACE_SHUTTER, CameraInfo.FACE_SHUTTER_ON); //Smile Shutter
+                }
             }
 
 
@@ -2520,6 +2569,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
     
     private Camera.Parameters quickModeSwitch(Camera.Parameters params){
         // Disable capturing on time of mode change.
+    	Log.d(TAG,"quickModeSwitch -->  Enter "+"mActiveMode= "+ mActiveMode);
         setPanelEnabled(false);
         mShutterButton.setClickable(false);
     	boolean special_mode = false;    
@@ -2538,6 +2588,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
     	if(mActiveMode.equals(CameraInfo.CAMERA_MODE_BURST)){
     		params.set(CameraInfo.CAMERA_MODE_BURST, CameraInfo.BURST_MODE_DEFAULT_VALUE);
     		params.setPreviewFrameRate(max); //OMAP4 BUG
+    		mShutterCaptureSet = false;
 
          	special_mode = true;
     	}else if(mActiveMode.equals(CameraInfo.CAMERA_MODE_PANORAMA)){
@@ -2545,11 +2596,32 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
     		params.setPreviewFrameRate(min); //OMAP4 BUG
 
          	special_mode = true;
+         	mShutterCaptureSet = false;
     	}else if (mActiveMode.equals(CameraInfo.CAMERA_MODE_ZSL)) { 
     		params.set(mActiveMode, CameraInfo.CAMERA_MODE_ENABLED_DEFAULT_VALUE);
     		params.setPreviewFrameRate(max); //OMAP4 BUG
     		special_mode = true;
-    	}else if (!mActiveMode.equals(CameraInfo.CAMERA_MODE_AUTO)) {
+    		mShutterCaptureSet = false;
+    	}
+    	/**
+    	 * Face and Smile Shutter Settings
+    	 */
+    	else if(mActiveMode.equals(CameraInfo.FACE_SHUTTER)){
+    		Log.d(TAG,"mActiveMode= "+ mActiveMode);
+    		params.set(mActiveMode, CameraInfo.FACE_SHUTTER_ON);
+    		special_mode = true;
+    	}
+    	else if(mActiveMode.equals(CameraInfo.SMILE_SHUTTER)){
+    		Log.d(TAG,"mActiveMode= "+ mActiveMode);
+    		params.set(mActiveMode, CameraInfo.SMILE_SHUTTER_ON);
+    		special_mode = true;
+    	}
+    	else if (mActiveMode.equals(CameraInfo.CAMERA_MODE_AUTO)){
+    		mShutterCaptureSet = false;
+    	}
+    	
+    	
+    	else if (!mActiveMode.equals(CameraInfo.CAMERA_MODE_AUTO)) {
     		params.set(mActiveMode, CameraInfo.CAMERA_MODE_ENABLED_DEFAULT_VALUE);   
     		params.setPreviewFrameRate(max); //OMAP4 BUG
         }
@@ -2561,7 +2633,21 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
     		mCamera.stopPreview();
 
     		mCamera.setParameters(params);
+    		if(mActiveMode.equals(CameraInfo.SMILE_SHUTTER) || mActiveMode.equals(CameraInfo.FACE_SHUTTER)) {
+    			//set preview Call back
+    			mCamera.setPreviewCallback(mPreviewCallBackListner);
+    			Log.d(TAG,"PreviewCall back set");
 
+    			//set shutter Listener
+    			mCamera.setFaceDetectionListener(mShutterDeteciontionListner);
+    			Log.d(TAG,"mShutterDeteciontionListner  set");
+
+    			
+    			mShutterCaptureSet = true;
+    			
+    			Log.d(TAG,"mShutterCaptureSet  ="+mShutterCaptureSet);
+    		}
+    			
 
     		mCamera.startPreview();
     	}
@@ -2585,6 +2671,7 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
 
         // Enable capturing.
         setPanelEnabled(true);
+        //if()  check for face and smile shutter
         mShutterButton.setClickable(true);
         
     	return params;
@@ -2766,6 +2853,60 @@ public class CameraActivity extends Activity implements ModeSelectionListener.Ca
         }
         return size;
     }
-	
-	
+
+	/**
+	 * @ To be used only for the Face and Smile shutter feature only
+	 */
+	private Camera.PreviewCallback mPreviewCallBackListner = new Camera.PreviewCallback() {
+		int frameCntr;
+		@Override
+		public void onPreviewFrame(byte[] data, Camera camera) {
+			// TODO Auto-generated method stub
+			// TODO Would set the data to null since i would not use it 
+			
+		
+		}
+	};
+
+	/**
+	 * @ Interface implementation for the Face Listener for the Face and Smile Shutter listener
+	 */
+	private Camera.FaceDetectionListener mShutterDeteciontionListner = new Camera.FaceDetectionListener() {
+		
+		@Override
+		public void onFaceDetection(Face[] faces, Camera camera) {
+			
+			// TODO Auto-generated method stub
+			// TODO 
+			// 1. Iterate to the first face get face score and keep it ready.
+			// 2  Check the mode of the shutter and then capture the image and send it the saver thread
+			// 3. Saver thread can be a AsyncTask Object
+			if(mShutterCaptureSet == true ) {
+				if(faces.length > 0){
+					if(faces[0].score > 1){
+						
+					 Log.d(TAG,"faces[0].score = " +faces[0].score);
+			         //takePicture(mCamera);
+					 camera.takePicture(mShutterCallback, mRAWPictureCallback, mPostViewCallback, mJPEGPhotoCallback);
+			        }
+					else if (faces[0].score == 1) {
+						// set the feature to off 
+						// both smile as well as face shutter
+						//mCamera.
+						Log.d(TAG,"Discard Shutter Sent");
+	                    Parameters parameters = mCamera.getParameters();
+	                    
+						parameters.set(CameraInfo.FACE_SHUTTER,CameraInfo.FACE_SHUTTER_OFF);
+						parameters.set(CameraInfo.SMILE_SHUTTER,CameraInfo.SMILE_SHUTTER_OFF);
+	                    mActiveMode = CameraInfo.CAMERA_MODE_AUTO;
+						mShutterCaptureSet = false;
+	                    mCamera.setParameters(parameters);
+	                    quickModeSwitch(parameters);
+						
+					}
+				}
+			} 	
+		}
+	};
 }
+
